@@ -114,10 +114,14 @@ describe('Router', () => {
           });
         });
       
-      afterAll(async() => {
-        await sequelize.queryInterface.bulkDelete("Photos", null, {});
-        await sequelize.queryInterface.bulkDelete("Users", null, {});
-        await sequelize.close();
+        afterAll(async () => {
+          // destroy data users
+          try {
+            await User.destroy({ where: {} });
+            await Photos.destroy({where: {}});
+          } catch (error) {
+            console.log(error);
+          }
         });
 
     });
